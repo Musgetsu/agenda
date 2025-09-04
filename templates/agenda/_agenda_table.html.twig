@@ -1,0 +1,53 @@
+<div class="calendar-table-wrapper">
+  <table>
+    <thead>
+      <tr>
+        <th>Lun</th>
+        <th>Mar</th>
+        <th>Mer</th>
+        <th>Jeu</th>
+        <th>Ven</th>
+        <th>Sam</th>
+        <th>Dim</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% set daysMap = {
+        'lundi': 1,
+        'mardi': 2,
+        'mercredi': 3,
+        'jeudi': 4,
+        'vendredi': 5,
+        'samedi': 6,
+        'dimanche': 7
+      } %}
+      {% set firstDate = month.days[0].getNumber() %}
+      {% set firstDayOfWeek = daysMap[month.days[0].name|lower] %}
+      {% set totalDays = month.days|length %}
+      {% set dayCounter = 1 %}
+
+      {% for week in 1..6 %}
+        <tr>
+          {% for weekday in 1..7 %}
+            {% if week == 1 and weekday < firstDayOfWeek %}
+              <td class="empty"></td>
+            {% elseif dayCounter <= totalDays %}
+              {% set day = month.days[dayCounter - 1] %}
+              <td
+                class="day-cell {{ day.number == today ? 'today' : '' }}"
+                data-year="{{ month.year.number }}"
+                data-month="{{ month.number }}"
+                data-day="{{ day.number }}"
+              >
+                {{ day.number }}
+              </td>
+              {% set dayCounter = dayCounter + 1 %}
+            {% else %}
+              <td class="empty"></td>
+            {% endif %}
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

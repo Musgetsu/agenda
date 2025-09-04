@@ -1,0 +1,19 @@
+<div class="day-slots">
+  <h3>Rendez-vous disponibles le {{ date|date('d/m/Y') }}</h3>
+  {% if slots is empty %}
+    <p>Aucun créneau disponible.</p>
+  {% else %}
+    <ul>
+      {% for slot in slots %}
+        <li>
+          {{ slot.begin|date('H:i') }} - {{ slot.end|date('H:i') }}
+          {% if slot.available %}
+            <button class="book-btn" data-slot="{{ slot.id }}">Réserver</button>
+          {% else %}
+            <span class="taken">Indisponible</span>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>

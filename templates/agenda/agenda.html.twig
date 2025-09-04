@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Projet Agenda{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/agenda.css') }}">
+{% endblock %}
+
+{% block body %}
+    <a href="{{ path('app_home') }}" class="back-btn">⟵ Retour</a>
+
+    <button id="theme-toggle" aria-label="Changer le thème">
+        <div class="toggle-thumb">🌙</div>
+    </button>
+
+    <div class="calendar">
+        <div class="calendar-header">
+            <a href="#" id="prev-month"
+               data-year="{{ prevYear }}"
+               data-month="{{ prevMonth }}">⟵</a>
+
+            <span id="agenda-month">{{ month.name }} {{ year.number }}</span>
+
+            <a href="#" id="next-month"
+               data-year="{{ nextYear }}"
+               data-month="{{ nextMonth }}">⟶</a>
+        </div>
+
+        <div id="agenda-container">
+            {# On inclut ton tableau existant #}
+                {% include 'agenda/_agenda_table.html.twig' with {
+                    month: month,
+                    year: year,
+                    today: today
+                } %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/theme.js') }}"defer></script>
+    <script src="{{ asset('js/agenda.js') }}"defer></script>
+{% endblock %}
